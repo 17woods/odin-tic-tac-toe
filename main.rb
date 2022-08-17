@@ -48,15 +48,14 @@ class Main
 
       @board.change(choice, @turn)
 
-      check_win
-
       if @turn == "X"
         @turn = "O"
-        @taken_x.add(choice)
+        @taken_x.add(Integer(choice))
       else
         @turn = "X"
-        @taken_o.add(choice)
+        @taken_o.add(Integer(choice))
       end
+      check_win
     end
   end
 
@@ -65,18 +64,22 @@ class Main
     Set[3, 6, 9], Set[1, 5, 9], Set[3, 5, 7]]
 
     for condition in win_conditions
+      #puts condition, condition.subset?(@taken_x), condition.subset?(@taken_o), @taken_o, @taken_x
       if condition.subset?(@taken_x)
         @winner = "X"
-        puts "XXXXXXXXXXXXXXXX"
       elsif condition.subset?(@taken_o)
         @winner = "O"
-        puts "OOOOOOOOOOOOOOOOOOO"
       end
     end
     
     unless @winner == false
       end_game
     end
+  end
+
+  def end_game
+    puts "Congradulations player #{@turn}, you win!"
+    exit
   end
 end
 
